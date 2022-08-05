@@ -1,57 +1,50 @@
-import react, {useState} from "react";
-import ExpenseItem from "./ExpenseItem";
+import React, {useState} from 'react';
+import ExpensesList from './ExpenseList';
 import Card from "../UI/Card";
-import "./Expense.css";
 import ExpensesFilter from "./ExpensesFilter";
+import ExpensesChart from './ExpensesChart';
+import "./Expenses.css";
 
 const Expense = (props) => {
-    const [selectedYear, setSelectedYear] = useState('2021')
+    const [selectedYear, setSelectedYear] = useState('2020');
+    const selectYearHandler = (year) => {
+        setSelectedYear(year);
+        console.log(year);
+      };
 
-    const filterChangeHandle = (selectedYear) => {
-        console.log(selectedYear);
-        setSelectedYear(selectedYear);
-    };
-
-    //Filter the Expense Component by Date
-    const filterExpenses = props.item.filter(expense => {
+     const filteredExpenses = props.item.filter(expense =>{
         return expense.date.getFullYear().toString() === selectedYear;
-    });
+     });
+
+    //  let expenseContent = <p>No Result Found.</p>;
+    //  if(filteredExpenses.length > 0){
+    //     expenseContent = filteredExpenses.map((expense) => (
+    //         <ExpenseItem
+    //             key={expense.id}
+    //             title={expense.title}
+    //             amount={expense.amount}
+    //             date={expense.date}
+    //         ></ExpenseItem>
+    //     ))
+    // }
 
     return (
-        <Card className="expense">
-            <ExpensesFilter selected={selectedYear} onChangeFilterHandler={filterChangeHandle}/>
-            {filterExpenses.map((expense) => 
+        <Card className="expense" >
+            <ExpensesFilter selected={selectedYear} onSelectYear={selectYearHandler}
+            />
+            <ExpensesChart expenses={filteredExpenses} />
+            <ExpensesList items={filteredExpenses} />
+            {/* 
+            method 1
+            {filteredExpenses.length === 0 && <p>No Result Found.</p>}
+            {filteredExpenses.length > 0 && filteredExpenses.map((expense) => (
                 <ExpenseItem
                     key={expense.id}
                     title={expense.title}
                     amount={expense.amount}
                     date={expense.date}
-                ></ExpenseItem>    
-                
-            )}
-            {/* <ExpenseItem
-                title={props.item[0].title}
-                amount={props.item[0].amount}
-                date={props.item[0].date}
-            ></ExpenseItem>
-
-            <ExpenseItem
-                title={props.item[1].title}
-                amount={props.item[1].amount}
-                date={props.item[1].date}
-            ></ExpenseItem>
-
-            <ExpenseItem
-                title={props.item[1].title}
-                amount={props.item[1].amount}
-                date={props.item[1].date}
-            ></ExpenseItem>
-
-            <ExpenseItem
-                title={props.item[3].title}
-                amount={props.item[3].amount}
-                date={props.item[3].date}
-            ></ExpenseItem> */}
+                ></ExpenseItem>
+            ))}  */}
         </Card>
     );
 }

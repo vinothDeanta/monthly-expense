@@ -7,7 +7,6 @@ const ExpenseForm = (props) => {
         ... =  stand for speard operator 
     */
 
-
     //One Method:
 
     const [enteredTitle, setEnteredTitle] = useState('');
@@ -25,9 +24,6 @@ const ExpenseForm = (props) => {
     const dateChangeHandler = (event) => {
         setEnteredDate(event.target.value);
     }
-
-
-
     /******** Second Method **********/
     /*
     const [userInput, setUserInput] = useState({
@@ -39,10 +35,10 @@ const ExpenseForm = (props) => {
     // For Title
     const titleChangeHandler = (event) => {
         
-        setUserInput({
-            ...userInput,
-            enteredTitle: event.target.value,
-        });
+        // setUserInput({
+        //     ...userInput,
+        //     enteredTitle: event.target.value,
+        // });
         // if state depend the pervious state means we go for the below approach
 
         setUserInput((prevstate) => {
@@ -93,15 +89,16 @@ const ExpenseForm = (props) => {
                 </div>
                 <div className="new-expense__control">
                     <label>Amount</label>
-                    <input type="number" value={enteredAmount} min="0.01" step="0.01" onChange={amountChangeHandler} />
+                    <input type="number" min="0.01" step="0.01" value={enteredAmount} onChange={amountChangeHandler} />
                 </div>
                 <div className="new-expense__control">
                     <label>Date</label>
-                    <input type="date"value={enteredDate}  min="2021-01-01" max="2023-12-31" onChange={dateChangeHandler} />
+                    <input type="date" min="2021-01-01" max="2023-12-31" value={enteredDate} onChange={dateChangeHandler} />
                 </div>
             </div>
             <div className="new-expense__actions">
-                <button>Add Expense</button>
+                <button type='button' onClick={props.onCancel}>Cancel</button>
+                <button type='submit'>Add Expense</button>
             </div>
 
         </form>
